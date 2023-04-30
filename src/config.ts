@@ -130,7 +130,7 @@ export class KubeConfig {
         this.makePathsAbsolute(rootDirectory);
     }
 
-    public async applytoHTTPSOptions(opts: https.RequestOptions | WebSocket.ClientOptions): Promise<void> {
+    public async applyToHTTPSOptions(opts: https.RequestOptions | WebSocket.ClientOptions): Promise<void> {
         await this.applyOptions(opts);
 
         const user = this.getCurrentUser();
@@ -180,7 +180,12 @@ export class KubeConfig {
         this.currentContext = obj['current-context'];
     }
 
-    public loadFromOptions(options: any): void {
+    public loadFromOptions(options: {
+        clusters: Cluster[];
+        contexts: Context[];
+        currentContext: Context['name'];
+        users: User[];
+    }): void {
         this.clusters = options.clusters;
         this.contexts = options.contexts;
         this.users = options.users;
